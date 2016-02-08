@@ -10,6 +10,7 @@ Phidget::Phidget()
 Phidget::~Phidget()
 {
   //close(); // segfaults, why?
+  CPhidget_close(handle_);
   CPhidget_delete(handle_);
 }
 
