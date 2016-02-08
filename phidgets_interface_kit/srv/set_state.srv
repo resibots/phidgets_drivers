@@ -1,3 +1,0 @@
-uint8 index # index of the output which state is defined
-bool state
----
