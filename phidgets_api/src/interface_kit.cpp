@@ -110,8 +110,8 @@ int InterfaceKit::output_change_callback(
     int state)
 {
     // convert state value to boolean
-    state = (state==PTRUE?true:false);
-    ((InterfaceKit*)user_data)->update_output_state(index, state);
+    bool b_state = (state==PTRUE?true:false);
+    ((InterfaceKit*)user_data)->update_output_state(index, b_state);
     return 0;
 }
 
