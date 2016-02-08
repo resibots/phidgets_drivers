@@ -36,7 +36,7 @@ namespace phidgets {
         // provided by Phidgets
         std::vector<bool> _digital_output_state;
 
-        void output_change(int index, bool state);
+        void update_output_state(int index, bool state);
 
     private:
 

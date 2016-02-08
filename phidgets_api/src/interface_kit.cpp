@@ -97,6 +97,12 @@ void InterfaceKit::set_states(std::vector<uint16_t> &indices, std::vector<uint16
         set_state((int)indices[i], (bool)states[i]);
     }
 }
+
+void InterfaceKit::update_output_state(int index, bool state)
+{
+    _digital_output_state[index] = state;
+}
+
 int InterfaceKit::output_change_callback(
     CPhidgetInterfaceKitHandle interface_kit,
     void* user_data,
@@ -105,13 +111,8 @@ int InterfaceKit::output_change_callback(
 {
     // convert state value to boolean
     state = (state==PTRUE?true:false);
-    ((InterfaceKit*)user_data)->output_change(index, state);
+    ((InterfaceKit*)user_data)->update_output_state(index, state);
     return 0;
-}
-
-void InterfaceKit::output_change(int index, bool state)
-{
-    _digital_output_state[index] = state;
 }
 
 } // namespace phidgets
