@@ -1,3 +1,6 @@
+#include <stdexcept>
+#include <sstream>
+
 #include "phidgets_api/interface_kit.h"
 
 namespace phidgets {
@@ -20,8 +23,8 @@ InterfaceKit::InterfaceKit():
     CPhidgetInterfaceKit_getOutputCount(_interface_kit_handle, &output_count);
     _digital_output_state.resize(output_count);
 
-    // register ir data callback
-    CPhidgetInterfaceKit_set_OnSensorChange_Handler(_interface_kit_handle, output_change_callback, this);
+    // register output state change callback
+    CPhidgetInterfaceKit_set_OnSensorChange_Handler(_interface_kit_handle, &InterfaceKit::output_change_callback, this);
 }
 
 bool InterfaceKit::get_state(int index)
@@ -32,17 +35,26 @@ bool InterfaceKit::get_state(int index)
         return false;
 }
 
-std::vector<bool> InterfaceKit::get_states(std::vector<int> indices)
+std::vector<bool> InterfaceKit::get_states(std::vector<int> &indices)
 {
     std::vector<bool> states;
     states.resize(indices.size());
 
     std::vector<int>::iterator index; // iterator over the indices
-
     for(index=indices.begin(); index!=indices.end(); index++)
-    {
-        states[*index] = _digital_output_state[*index];
-    }
+        states.push_back(get_state(*index));
+
+    return states;
+}
+
+std::vector<uint16_t> InterfaceKit::get_states(std::vector<uint16_t> &indices)
+{
+    std::vector<uint16_t> states;
+    states.resize(indices.size());
+
+    std::vector<uint16_t>::iterator index; // iterator over the indices
+    for(index=indices.begin(); index!=indices.end(); index++)
+        states.push_back((uint16_t)get_state((int)*index));
 
     return states;
 }
@@ -54,6 +66,37 @@ void InterfaceKit::set_state(int index, bool state)
         (state?PTRUE:PFALSE));
 }
 
+void InterfaceKit::set_states(std::vector<int> &indices, std::vector<bool> &states)
+{
+    if (indices.size() != states.size())
+    {
+        std::stringstream message;
+        message << "indices and states vector have different size:"
+            "respectfully " << indices.size() << " and " << states.size();
+        throw std::runtime_error(message.str());
+    }
+
+    for (int i=0; i<indices.size(); i++)
+    {
+        set_state(indices[i], states[i]);
+    }
+}
+
+void InterfaceKit::set_states(std::vector<uint16_t> &indices, std::vector<uint16_t> &states)
+{
+    if (indices.size() != states.size())
+    {
+        std::stringstream message;
+        message << "indices and states vector have different size:"
+            "respectfully " << indices.size() << " and " << states.size();
+        throw std::runtime_error(message.str());
+    }
+
+    for (int i=0; i<indices.size(); i++)
+    {
+        set_state((int)indices[i], (bool)states[i]);
+    }
+}
 int InterfaceKit::output_change_callback(
     CPhidgetInterfaceKitHandle interface_kit,
     void* user_data,
