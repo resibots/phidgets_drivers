@@ -5,7 +5,7 @@ namespace phidgets {
     InterfaceKitNode::InterfaceKitNode(ros::NodeHandle nh):
         _nh(nh)
     {
-        // Open connection to our relay interface kit
+        // Open connection to a 4-relay interface kit
         _device.open(388136);
 
         // Wait for the device to be attached to an USB port, or fail
@@ -30,11 +30,6 @@ namespace phidgets {
             &InterfaceKitNode::set_state, this);
         _set_states_service = _nh.advertiseService("set_states",
             &InterfaceKitNode::set_states, this);
-
-    }
-
-    InterfaceKitNode::~InterfaceKitNode()
-    {
 
     }
 
