@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package>
+  <name>phidgets_interface_kit</name>
+  <version>0.0.1</version>
+  <description>Driver for the Phidgets interface kit</description>
+
+  <maintainer email="dorian.goepp@gmail.com">Dorian Goepp</maintainer>
+
+  <license>BSD</license>
+
+  <!-- <url type="website">http://ros.org/wiki/phidgets_interface_kit</url> -->
+
+  <author>Dorian Goepp</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>phidgets_api</build_depend>
+  <build_depend>roscpp</build_depend>
+
+  <run_depend>phidgets_api</run_depend>
+  <run_depend>roscpp</run_depend>
+</package>
