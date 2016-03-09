@@ -24,22 +24,24 @@ namespace phidgets {
 
         // Set the state of one or more (digital) channels
         void set_state(int index, bool state);
-        void set_states(std::vector<int> &indices, std::vector<bool> &states);
+        void set_states(const std::vector<int> &indices, const std::vector<bool> &states);
         // to be compatible with the types in ROS messages and services
-        void set_states(std::vector<uint16_t> &indices, std::vector<uint16_t> &states);
+        void set_states(const std::vector<uint16_t> &indices, const std::vector<uint16_t> &states);
 
     protected:
 
         CPhidgetInterfaceKitHandle _interface_kit_handle;
 
+        virtual void attachHandler();
+
         // store the state of each output
         std::vector<bool> _digital_output_state;
-        // called by output_change_callback to update _digital_output_state
-        void update_output_state(int index, bool state);
+        // called by _output_change_callback to update _digital_output_state
+        void _update_output_state(int index, bool state);
 
     private:
 
-        static int output_change_callback(
+        static int _output_change_callback(
             CPhidgetInterfaceKitHandle interface_kit,
             void* user_data,
             int index,
