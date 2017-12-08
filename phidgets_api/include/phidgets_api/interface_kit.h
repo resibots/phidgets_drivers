@@ -3,33 +3,30 @@
 
 #include "phidgets_api/phidget.h"
 
-#include "ros/ros.h"
+#include <ros/ros.h>
 
 #include <vector>
 #include <map>
 
 namespace phidgets {
 
-    class InterfaceKit: public Phidget
-    {
+    class InterfaceKit : public Phidget {
     public:
-
         InterfaceKit();
 
         // Get the output state of one or more chanels
         bool get_state(int index);
-        std::vector<bool> get_states(std::vector<int> &indices);
+        std::vector<bool> get_states(std::vector<int>& indices);
         // to be compatible with the types in ROS messages and services
-        std::vector<uint16_t> get_states(std::vector<uint16_t> &indices);
+        std::vector<uint16_t> get_states(std::vector<uint16_t>& indices);
 
         // Set the state of one or more (digital) channels
         void set_state(int index, bool state);
-        void set_states(const std::vector<int> &indices, const std::vector<bool> &states);
+        void set_states(const std::vector<int>& indices, const std::vector<bool>& states);
         // to be compatible with the types in ROS messages and services
-        void set_states(const std::vector<uint16_t> &indices, const std::vector<uint16_t> &states);
+        void set_states(const std::vector<uint16_t>& indices, const std::vector<uint16_t>& states);
 
     protected:
-
         CPhidgetInterfaceKitHandle _interface_kit_handle;
 
         virtual void attachHandler();
@@ -40,7 +37,6 @@ namespace phidgets {
         void _update_output_state(int index, bool state);
 
     private:
-
         static int _output_change_callback(
             CPhidgetInterfaceKitHandle interface_kit,
             void* user_data,
