@@ -21,7 +21,7 @@ generate_messages(
 
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES phidgets_ir
+#  LIBRARIES phidgets_interface_kit
   CATKIN_DEPENDS roscpp message_runtime phidgets_api
 )
 

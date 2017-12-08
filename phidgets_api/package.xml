@@ -3,7 +3,7 @@
   <name>phidgets_api</name>
   <version>0.2.2</version>
   <description>A C++ Wrapper for the Phidgets C API</description>
-  
+
   <maintainer email="muhrix@gmail.com">Murilo FM</maintainer>
 
   <license>BSD</license>
