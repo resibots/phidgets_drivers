@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 
 project(phidgets_api)
 
-find_package(catkin REQUIRED COMPONENTS libphidget21)
+find_package(catkin REQUIRED COMPONENTS libphidget21 roscpp)
 
 catkin_package(
   INCLUDE_DIRS include

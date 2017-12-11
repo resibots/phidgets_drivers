@@ -21,7 +21,7 @@ generate_messages(
 
 catkin_package(
   INCLUDE_DIRS include
-#  LIBRARIES phidgets_interface_kit
+  LIBRARIES phidgets_interface_kit
   CATKIN_DEPENDS roscpp message_runtime phidgets_api
 )
 
@@ -31,4 +31,15 @@ add_executable(phidgets_interface_kit src/main.cpp src/interface_kit_node.cpp)
 
 target_link_libraries(phidgets_interface_kit ${catkin_LIBRARIES} phidgets_api)
 
-add_dependencies(phidgets_interface_kit phidgets_interface_kit_gencpp phidgets_interface_kit_messages_cpp)
+add_dependencies(phidgets_interface_kit ${catkin_EXPORTED_TARGETS})
+
+install(TARGETS phidgets_interface_kit
+   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+install(DIRECTORY include/${PROJECT_NAME}/
+   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+   FILES_MATCHING PATTERN "*.h"
+)
